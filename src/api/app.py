@@ -139,6 +139,28 @@ def movieLike(dict):
     db.close()
     return movielike
 
+def getMylike(dict):
+    db = MySQLdb.connect(
+        host='localhost',
+        port=3306,
+        user='root',
+        passwd='mysql2021',
+        db='test',
+    )
+    cursor = db.cursor()
+    selectsql = "SELECT * FROM userlike WHERE username = %s and movielike=%s"
+    parSele = (dict['username'],1,)
+    try:
+        # 执行SQL语句
+        cursor.execute(selectsql, parSele)
+        results = cursor.fetchall()
+        data = results[0][0]
+        print(data)
+    except:
+        return 'wrong'
+    # 关闭数据库连接
+    db.close()
+    return results
 
 @app.route('/time')
 def get_current_time():
@@ -188,6 +210,16 @@ def movielike():
     print(status)
     result = str(status)
     return result
+
+@app.route('/mylike',methods = ['POST'])
+def mylike():
+    incoming = request.get_data()
+    json_file = json.loads(incoming)
+    print(json_file)
+    status = getMylike(json_file)
+    results = json.dumps(status)
+    return results
+
 
 if __name__ == '__main__':
     app.run(debug=True)

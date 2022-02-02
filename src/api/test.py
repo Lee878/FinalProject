@@ -19,28 +19,24 @@ db = MySQLdb.connect(
 )
 # 通过获取到的数据库连接conn下的cursor()方法来创建游标。
 cursor = db.cursor()
-dict = {'username': 'admin', 'MovieId': '123', 'Like': True, 'Type': 'movie', 'title': 'Spider-Man: No Way Home', 'date': '2021-12-15', 'poster': '/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg', 'vote': '8.4'}
-sqlInsert = "INSERT INTO userlike(username,movieid,movietitle,type,poster,movielike,date,vote) VALUES (%s,%s,%s,%s,%s,%s,%s,%s); "
-parInsert = (dict['username'], dict['MovieId'], dict['title'], dict['Type'], dict['poster'], dict['Like'], dict['date'],
-             dict['vote'],)
-sqlSe = "SELECT * FROM userlike WHERE  movieid = %s"
-parSe = (dict['MovieId'],)
-sqlUp = "UPDATE userlike SET movielike=%s WHERE movieid = %s"
-parUp = (dict['Like'], dict['MovieId'],)
+# dict = {'username': 'admin', 'MovieId': '123', 'Like': True, 'Type': 'movie', 'title': 'Spider-Man: No Way Home', 'date': '2021-12-15', 'poster': '/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg', 'vote': '8.4'}
+# sqlInsert = "INSERT INTO userlike(username,movieid,movietitle,type,poster,movielike,date,vote) VALUES (%s,%s,%s,%s,%s,%s,%s,%s); "
+# parInsert = (dict['username'], dict['MovieId'], dict['title'], dict['Type'], dict['poster'], dict['Like'], dict['date'],
+#              dict['vote'],)
+sqlSe = "SELECT * FROM userlike"
+# parSe = (dict['MovieId'],)
+# sqlUp = "UPDATE userlike SET movielike=%s WHERE movieid = %s"
+# parUp = (dict['Like'], dict['MovieId'],)
+# selectsql = "SELECT * FROM userlike WHERE username = %s"
+# parSele = (dict['username'],)
 try:
     # 执行SQL语句
-    cursor.execute(sqlSe, parSe)
-    results = cursor.fetchall()
-    if (results):
-        print(results[0][0])
-        cursor.execute(sqlUp, parUp)
-        db.commit()
-        print("Finish Update")
-    else:
-        cursor.execute(sqlInsert, parInsert)
-        db.commit()
-        print("Finish Insert")
-    print('success')
+    cursor.execute(sqlSe)
+    result = cursor.fetchall()  # 所有结果
+    column = [index[0] for index in cursor.description]  # 列名
+    data_dict = [dict(zip(column, row)) for row in result]  # row是数据库返回的一条一条记录，其中的每一天和column写成字典，最后就是字典数组
+    print(data_dict)
+    print(type(data_dict))
 except MySQLdb.Error as e:
     print(e)
 db.close()

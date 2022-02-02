@@ -9,12 +9,10 @@ import CustomPag from '../CustomPag'
 const MovieList = () => {
     const [page, setPage] = useState(1)
     const [content, setContent] = useState([])
-    const [pagesize, setPagesize] = useState(50)
+    const [pagesize, setPagesize] = useState(1)
     const fetchMovie = async() =>{
         const {data} = await axios.get(`
         https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`)
-
-
         console.log(data)
         setContent(data.results)
         setPagesize(data.total_results)
@@ -26,7 +24,7 @@ const MovieList = () => {
 
     return (
         <div>
-            <span className='pageTitle'>Movie</span>
+            <span className='pageTitle'>Movie&TV Show</span>
             <div className='movielist'>
                 {content && content.map((c)=>
                 <MovieItem 

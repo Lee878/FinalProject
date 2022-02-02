@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import './search.less'
-import { Input, message,Button } from 'antd';
+import { Input,Button } from 'antd';
 import { Tabs } from 'antd';
 import CustomPag from '../CustomPag';
 import { MovieItem } from '../movieList/MovieItem';
