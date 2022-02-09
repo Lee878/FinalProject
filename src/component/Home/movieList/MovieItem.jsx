@@ -14,7 +14,7 @@ export const MovieItem = ({
     vote_average ,
 }) => {
     return (
-        <Link to={`/movie/${id}/${type}`} className='media'>
+        <Link to={`/movie/${id}/${type}/${title}`} className='media'>
             <Badge count={vote_average? (vote_average): (<ClockCircleOutlined style={{ color: '#f5222d' }} />)} color={vote_average >=7.5 ? 'red' : 'yellow'}>
             <img className='poster' src={poster ? `${img_300}/${poster}`: unavailable} alt={title} />
             </Badge>

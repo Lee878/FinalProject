@@ -18,24 +18,35 @@ const Moviedetail = () => {
     const [moviedate, setMoviedate] = useState()
     const [movievote, setMovievote] = useState()
     const [movietype, setMovieType] = useState()
+    const [provider, setProvider] = useState()
+
 
     const username = Memorycontrol.user.username
 
     const params = useParams();
     const fetchData = async () => {
-        const { data } = await axios.get(
-          `https://api.themoviedb.org/3/${params.type}/${params.id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
-        );
-    
-        setContent(data);
-        setMoviedate(data.release_date || data.first_air_date)
-        setMovietitle(data.title||data.name)
-        setMovievote(data.vote_average)
-        setPosterpath(data.poster_path)
+        axios.all([
+            axios.get(`https://api.themoviedb.org/3/${params.type}/${params.id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`),
+            axios.get(`https://api.themoviedb.org/3/${params.type}/${params.id}/watch/providers?api_key=${process.env.REACT_APP_API_KEY}`)
+          ])
+          .then(axios.spread(function (userResp, reposResp) {
+            // 上面两个请求都完成后，才执行这个回调方法
+            console.log('User', userResp.data);
+            console.log('Repositories', reposResp.data);
+            if (reposResp.data.results.GB) {
+                console.log(reposResp.data.results.GB.flatrate[0].provider_name);
+                setProvider(reposResp.data.results.GB.flatrate[0].provider_name)
+            }
+            setContent(userResp.data);
+            setMoviedate(userResp.data.release_date || userResp.data.first_air_date)
+            setMovietitle(userResp.data.title||userResp.data.name)
+            setMovievote(userResp.data.vote_average)
+            setPosterpath(userResp.data.poster_path)
+        
+          }));
         
       };
-    
-      const clickLike =()=>{
+    const clickLike =()=>{
           setLike(!like)
           console.log(like)
           axios
@@ -55,10 +66,10 @@ const Moviedetail = () => {
           })
       
       }
-      const fetchLike=()=>{
+    const fetchLike=()=>{
         axios
         .post('/movielike', {
-            MovieId: params.id,
+            Movietitle: params.title,
         }
         ).then((response) => { 
           console.log(response.data)
@@ -74,6 +85,7 @@ const Moviedetail = () => {
         console.log('ddd')
         setMovieid(params.id)
         setMovieType(params.type)
+        setMovietitle(params.title)
         fetchData();
         fetchLike();
         // eslint-disable-next-line
@@ -130,7 +142,15 @@ const Moviedetail = () => {
                             <div className='footer'>
                                 <Button icon={like? (<AiFillHeart style={{color:'red'}} />):<AiOutlineHeart />} type="primary" shape="circle" size='large' onClick={
                                     clickLike
-                                }></Button>     
+                                }></Button>
+                                {provider? ( 
+                                <div className='footer-provider'>
+                                    <h1>Provider</h1>
+                                    <h2>{provider}</h2>
+                                </div>)
+                                :
+                                <></>}
+                               
                             </div>
 
                             

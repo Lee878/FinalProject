@@ -121,8 +121,8 @@ def movieLike(dict):
         db='test',
     )
     cursor = db.cursor()
-    par = (dict['MovieId'],)
-    sql = "SELECT movielike FROM userlike WHERE movieid = %s "
+    par = (dict['Movietitle'],)
+    sql = "SELECT movielike FROM userlike WHERE movietitle = %s "
     movielike = False
     try:
         # 执行SQL语句

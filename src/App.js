@@ -39,7 +39,7 @@ function App() {
           <Route path='/like' element = {<Like />}/>
           <Route path='/movie' element = {<MovieList />}/>
           <Route path= '/searchmovie' element = {<Search />}/>
-          <Route path='/movie/:id/:type' exact element= {<Moviedetail />}  />
+          <Route path='/movie/:id/:type/:title' exact element= {<Moviedetail />}  />
         </Route>
       </Routes>
     </div>

@@ -24,7 +24,7 @@ const MovieList = () => {
 
     return (
         <div>
-            <span className='pageTitle'>Movie&TV Show</span>
+            <span className='pageTitle'>Movie & TV Show</span>
             <div className='movielist'>
                 {content && content.map((c)=>
                 <MovieItem 
