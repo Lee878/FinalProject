@@ -13,19 +13,7 @@ import Moviedetail from './component/Home/movieList/Moviedetail';
 
 
 function App() {
-  // const [currentTime, setCurrentTime] = useState(0);
-
-  // function clickButton() {
-  //   axios.get("http://127.0.0.1:5000/time").then((res) => {
-  //     console.log("ABC");
-  //     console.log(res.data.time)
-  //   });
-  // }
-    // fetch('http://127.0.0.1:5000/time').then(res => res.json()).then(data => {
-      // console.log("ABC");
-      // setCurrentTime(data.time);
-    // });
-  // }, []);
+ 
   return (
     <Router>
     <div className="App">

@@ -8,6 +8,7 @@ import { Button } from 'antd';
 import './Moviedetail.less'
 import {AiFillHeart,AiOutlineHeart} from 'react-icons/ai'
 import Memorycontrol from '../../../api/Memorycontrol';
+import Customcarousel from '../Carousel';
 
 const Moviedetail = () => {
     const [content, setContent] = useState([]);
@@ -140,16 +141,19 @@ const Moviedetail = () => {
                                 <span>{content.overview}</span>
                             </div>
                             <div className='footer'>
-                                <Button icon={like? (<AiFillHeart style={{color:'red'}} />):<AiOutlineHeart />} type="primary" shape="circle" size='large' onClick={
-                                    clickLike
-                                }></Button>
-                                {provider? ( 
-                                <div className='footer-provider'>
-                                    <h1>Provider</h1>
-                                    <h2>{provider}</h2>
-                                </div>)
-                                :
-                                <></>}
+                                <div className='footer-left'>
+                                    <Button icon={like? (<AiFillHeart style={{color:'red'}} />):<AiOutlineHeart />} type="primary" shape="circle" size='large' onClick={
+                                        clickLike
+                                    }></Button>
+                                    {provider? ( 
+                                    <div className='footer-provider'>
+                                        <h1>Provider</h1>
+                                        <h2>{provider}</h2>
+                                    </div>)
+                                    :
+                                    <></>}
+                                </div>
+                                <Customcarousel />
                                
                             </div>
 

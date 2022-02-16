@@ -1,7 +1,7 @@
 import {React,useEffect} from 'react';
 import 'antd/dist/antd.css';
 import './login.less';
-import { Form, Input, Button, Checkbox,message } from 'antd';
+import { Form, Input, Button,message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import { Link,useNavigate  } from 'react-router-dom';
@@ -14,7 +14,7 @@ const Login = () => {
   useEffect(() => {
     const isLogin=()=>{
       console.log(user)
-      if (!(user.username===undefined)) {
+      if (user.username!==undefined) {
         console.log('ddd')
         navigate('/')
       }
@@ -27,7 +27,7 @@ const Login = () => {
     .post('/login', {
       username: values['username'],
       password: values['password'],
-      remember: values['remember'],
+      remember: true,
     }
     ).then((response) => { 
       console.log(response.data)
@@ -35,8 +35,12 @@ const Login = () => {
       if(response.data ===1){
         console.log("ddd")
         message.success('This is a success message');
+        if (values['remember']) {
+          console.log('remember');
+        }
         Memorycontrol.user=values
         storageStore.saveUser(values)
+          //remember才维持登录
         navigate('/')
       }
       if (response.data === 0){
@@ -96,9 +100,9 @@ const Login = () => {
             />
           </Form.Item>
           <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
+            {/* <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>Remember me</Checkbox>
-            </Form.Item>
+            </Form.Item> */}
             <Link to='/forget'>
             <a className="login-form-forgot" href="//">
               Forgot password

@@ -20,7 +20,7 @@
         height: 50%;
         display: flex;
         .picture-control{
-            height: auto;
+            height: 30%;
             border: 1px solid rgb(5, 115, 241);
             width: 30%;
             border-radius: 10px;
@@ -95,16 +95,25 @@
 
                 .footer{
                     margin-top: 20px;
-                    .footer-provider{
-                        margin-top: 15px;
-                        h1{
-                            font-size: 20px;
-                        }
-                        h2{
-                            font-size: 40px;
-                            color: red;
+                    .footer-left{
+                        display: flex;
+                        flex-direction: row;
+                        .footer-provider{
+                            text-align: center;
+                            padding-left: 45%;
+                            h1{
+                                font-size: 20px;
+                            }
+                            h2{
+                                font-size: 40px;
+                                color: red;
+                            }
                         }
                     }
+                    .footer-right{
+                        margin-left: 10%;
+                    }
+                    
                    
                 }
             }
