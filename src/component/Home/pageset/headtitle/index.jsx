@@ -58,7 +58,7 @@ const Headertitle = () => {
     return (
         <div className='header'>
             <Link to ='/movie' className='header-left'>
-                <h1>Movie</h1>
+                <h1>Enjoy</h1>
             </Link>
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} className='header-middle'>
                 <Menu.Item key="1" icon={<SearchOutlined />}>
