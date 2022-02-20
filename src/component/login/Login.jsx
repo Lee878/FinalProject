@@ -7,7 +7,10 @@ import axios from 'axios'
 import { Link,useNavigate  } from 'react-router-dom';
 import Memorycontrol from '../../api/Memorycontrol';
 import storageStore from '../../api/storageStore';
+import CryptoJS from 'crypto-js';
+import { keyPassword } from '../../config/config';
 
+const keyHex = CryptoJS.enc.Utf8.parse(keyPassword);
 const Login = () => { 
   const navigate = useNavigate();
   const user= Memorycontrol.user
@@ -22,6 +25,20 @@ const Login = () => {
     isLogin()
     // eslint-disable-next-line
   }, [])
+
+  const encryptDES = (message) => {
+    if (message) {
+      let encrypted = CryptoJS.DES.encrypt(message, keyHex, {
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7
+      });
+      return encrypted.ciphertext.toString();
+    } else {
+      return '';
+    }
+  };
+
+
   const onFinish = (values) => {
   axios
     .post('/login', {
@@ -35,9 +52,10 @@ const Login = () => {
       if(response.data ===1){
         console.log("ddd")
         message.success('This is a success message');
-        if (values['remember']) {
-          console.log('remember');
-        }
+        console.log(values);
+        console.log(encryptDES(values['password']));
+        values['password']=encryptDES(values['password'])
+        console.log(values);
         Memorycontrol.user=values
         storageStore.saveUser(values)
           //remember才维持登录

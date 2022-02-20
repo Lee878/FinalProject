@@ -61,7 +61,7 @@ const MovieList = () => {
             <span className='pageTitle'>Movie & TV Show</span>
             <Tabs  centered size='large'  className='tabs' onChange={tabsChange}>
                     <TabPane tab="Trending" key="1" />
-                    <TabPane tab="Top Rates" key="2" />
+                    <TabPane tab="Top Rated" key="2" />
             </Tabs>
             <div className='movielist'>
                 {content && content.map((c)=>
