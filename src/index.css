@@ -31,3 +31,9 @@
   [data-theme="dark"] .site-layout-content {
     background: #141414;
   }
+
+body,html{
+  width: 100%;
+  min-width: 1500px;
+  /* min-height: 1500px; */
+}

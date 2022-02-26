@@ -145,6 +145,21 @@ const Moviedetail = () => {
         setMovietitle(params.title)
         fetchData();
         fetchLike();
+        // return ()=>{
+        //     setMovieid();
+        //     setMovieType();
+        //     setMovietitle();
+        //     setContent([]);
+        //     setLike(false)
+        //     setPosterpath()
+        //     setMoviedate()
+        //     setMovievote()
+        //     setMovieType("movie")
+        //     setProvider()
+        //     setRegions([])
+        //     setRegion()
+        //     setfirst()
+        // }
         // fetechMovieLikn()
         // eslint-disable-next-line
       }, [like]);
@@ -216,7 +231,7 @@ const Moviedetail = () => {
                                         {
                                         provider? 
                                         (provider.map((pr)=>
-                                        <p style={{textAlign:'center'}}><a href={first.link}>{pr.provider_name}</a></p> 
+                                        <p style={{textAlign:'center'}} key = {pr}><a href={first.link}>{pr.provider_name}</a></p> 
                                         //  <h2 href={first.link}>{p.provider_name}</h2>
                                         ))
                                         :
