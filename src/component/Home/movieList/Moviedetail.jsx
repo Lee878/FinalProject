@@ -4,12 +4,14 @@ import { useParams } from 'react-router-dom';
 import {img_500,  log_pic,  unavailableLandscape} from '../../../config/config';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { Button } from 'antd';
+import { Button, Rate } from 'antd';
 import './Moviedetail.less'
 import {AiFillHeart,AiOutlineHeart} from 'react-icons/ai'
 import Memorycontrol from '../../../api/Memorycontrol';
 import Customcarousel from '../Carousel';
 import ReactCountryFlag from "react-country-flag";
+import { CheckOutlined } from '@ant-design/icons';
+
 
 
 import { Select } from "antd";
@@ -29,6 +31,9 @@ const Moviedetail = () => {
     const [regions, setRegions] = useState([])
     const [region, setRegion] = useState()
     const [first, setfirst] = useState()
+    const [rate, setRate] = useState(0)
+    const [net, setNet] = useState(false)
+    const [amz, setAmz] = useState(false)
 
 
     const username = Memorycontrol.user.username
@@ -101,10 +106,39 @@ const Moviedetail = () => {
       
       }
 
+      const fetchPrime = () =>{
+        axios.post('/myPrime',{
+           username: username,
+       }
+       ).then((response) => { 
+           console.log(response.data)
+           setAmz(response.data.amazon)
+           // console.log(typeof(response.data.netfilx));
+           setNet(response.data.netfilx)
+    
+         })
+   }
+
       function handleChange(value) {
         console.log(`selected ${value}`);
         setProvider(region[value].flatrate)
         setfirst(region[value])
+      }
+
+      function rateChange(value){
+        console.log(`selected ${value}`);
+        setRate(value)
+        // console.log(rate);
+        axios
+          .post('/myRate', {
+            username: username,
+            title:movietitle,
+            rate:value
+          }
+          ).then((response) => { 
+            console.log(response.data)
+            console.log(typeof(response.data))
+          })
       }
     //   const options = {
     //         method: 'GET',
@@ -127,42 +161,38 @@ const Moviedetail = () => {
         axios
         .post('/movielike', {
             Movietitle: params.title,
+            Username: username
         }
         ).then((response) => { 
           console.log(response.data)
           const result = response.data
-          if (result === 'True') {
+          const returnRate = parseFloat(response.data.rate)
+        //   console.log(typeof(response.data))
+        //   console.log(result['like']);
+          
+          if (result.like === true) {
               setLike(true)
-          }else if (result === 'False') {
+          }else if (result.like === false) {
               setLike(false)
+          }
+          if (returnRate === 0) {
+              setRate(0)
+          }else{
+              setRate(returnRate)
           }
         })
       }
     useEffect(() => {
-        console.log('ddd')
         setMovieid(params.id)
         setMovieType(params.type)
         setMovietitle(params.title)
         fetchData();
         fetchLike();
-        // return ()=>{
-        //     setMovieid();
-        //     setMovieType();
-        //     setMovietitle();
-        //     setContent([]);
-        //     setLike(false)
-        //     setPosterpath()
-        //     setMoviedate()
-        //     setMovievote()
-        //     setMovieType("movie")
-        //     setProvider()
-        //     setRegions([])
-        //     setRegion()
-        //     setfirst()
-        // }
-        // fetechMovieLikn()
+        fetchPrime();
+        
+
         // eslint-disable-next-line
-      }, [like]);
+      }, [like,rate]);
     return (
         <div>
             {content&&(
@@ -174,7 +204,7 @@ const Moviedetail = () => {
                       "-----"
                     ).substring(0, 4)}
                     )</span>
-                        <h3>Original title:{content.original_title?content.original_title:(content.name || content.title)}</h3>
+                        <h3>Original title:{content.original_title||content.original_name?content.original_title||content.original_name:(content.name || content.title)}</h3>
                     </div>
                     
                     <div className='moviedeatial-maincontent'>
@@ -231,13 +261,16 @@ const Moviedetail = () => {
                                         {
                                         provider? 
                                         (provider.map((pr)=>
-                                        <p style={{textAlign:'center'}} key = {pr}><a href={first.link}>{pr.provider_name}</a></p> 
+                                        <p style={{textAlign:'center'}} key = {pr}><a href={first.link}>{pr.provider_name}{(pr.provider_name==='Netflix'&&net)||(pr.provider_name==='Amazon Prime Video'&&amz) ? (<CheckOutlined />):<></>}</a></p> 
                                         //  <h2 href={first.link}>{p.provider_name}</h2>
                                         ))
                                         :
                                         <h1>Not Found</h1>}
                                     </div>
-                              
+                                <div className='footer-rate'>
+                                    <h1>Rate</h1>
+                                    <Rate allowHalf count={5} defaultValue={0} onChange={rateChange} disabled={!like} value={rate}/>
+                                </div>                         
                                 </div>
                                 <Customcarousel />
                                

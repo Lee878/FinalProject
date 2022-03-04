@@ -121,23 +121,33 @@ def movieLike(dict):
         db='test',
     )
     cursor = db.cursor()
-    par = (dict['Movietitle'],)
-    sql = "SELECT movielike FROM userlike WHERE movietitle = %s "
+    par = (dict['Movietitle'],dict['Username'],)
+    sql = "SELECT movielike, userrate FROM userlike WHERE movietitle = %s and username = %s "
     movielike = False
+    movierate = 0
     try:
         # 执行SQL语句
         cursor.execute(sql, par)
         results = cursor.fetchall()
-        data = results[0][0]
-        if(data==0):
+        dataLike = results[0][0]
+        dataRate = results[0][1]
+        print(dataLike)
+        print(dataRate)
+        if (dataLike == 0):
             movielike = False
-        elif(data==1):
+        elif (dataLike == 1):
             movielike = True
+        if (dataRate != None):
+            movierate = dataRate
+        finalResult = {'like': movielike, 'rate': movierate}
+        print(finalResult['like'])
+        print(type(finalResult))
+        return finalResult
     except:
-        return 'wrong'
+        return {'like': movielike, 'rate': movierate}
     # 关闭数据库连接
     db.close()
-    return movielike
+    return finalResult
 
 def getMylike(dict):
     db = MySQLdb.connect(
@@ -158,6 +168,82 @@ def getMylike(dict):
         print(data)
     except:
         return 'wrong'
+    # 关闭数据库连接
+    db.close()
+    return results
+
+
+def changeRate(dict):
+    db = MySQLdb.connect(
+        host='localhost',
+        port=3306,
+        user='root',
+        passwd='mysql2021',
+        db='test',
+    )
+    cursor = db.cursor()
+    sql = "UPDATE userlike SET userrate=%s WHERE movietitle = %s and username = %s  "
+    par = (dict['rate'], dict['title'], dict['username'],)
+    try:
+        # 执行SQL语句
+        cursor.execute(sql, par)
+        db.commit()
+        return '1'
+    except:
+        return '0'
+# 关闭数据库连接
+    db.close()
+
+def changePrime(dict):
+    db = MySQLdb.connect(
+        host='localhost',
+        port=3306,
+        user='root',
+        passwd='mysql2021',
+        db='test',
+    )
+    cursor = db.cursor()
+    sql = "update user set netflix = %s, amazon = %s where username = %s"
+    par = (dict['netflix'], dict['amazon'], dict['username'],)
+    try:
+        # 执行SQL语句
+        cursor.execute(sql, par)
+        db.commit()
+        return '1'
+    except:
+        return '0'
+# 关闭数据库连接
+    db.close()
+
+def getMyPrime(dict):
+    db = MySQLdb.connect(
+        host='localhost',
+        port=3306,
+        user='root',
+        passwd='mysql2021',
+        db='test',
+    )
+    cursor = db.cursor()
+    selectsql = "SELECT netflix,amazon FROM user WHERE username = %s"
+    parSele = (dict['username'],)
+    try:
+        # 执行SQL语句
+        cursor.execute(selectsql, parSele)
+        results = cursor.fetchall()
+        net = results[0][0]
+        amz = results[0][1]
+        if(net ==0):
+            net = False
+        elif(net ==1):
+            net =True
+        if (amz == 0):
+            amz = False
+        elif (amz == 1):
+            amz = True
+        return {'netfilx': net, 'amazon': amz}
+
+    except:
+        return {'netfilx': 0, 'amazon': 0}
     # 关闭数据库连接
     db.close()
     return results
@@ -208,8 +294,7 @@ def movielike():
     print(json_file)
     status = movieLike(json_file)
     print(status)
-    result = str(status)
-    return result
+    return status
 
 @app.route('/mylike',methods = ['POST'])
 def mylike():
@@ -220,6 +305,33 @@ def mylike():
     results = json.dumps(status)
     return results
 
+@app.route('/myRate',methods = ['POST'])
+def myRate():
+    incoming = request.get_data()
+    json_file = json.loads(incoming)
+    print(json_file)
+    status = changeRate(json_file)
+    # results = json.dumps(status)
+    print("Update successfully"+status)
+    return status
+
+@app.route('/prime',methods = ['POST'])
+def cPrime():
+    incoming = request.get_data()
+    json_file = json.loads(incoming)
+    print(json_file)
+    status = changePrime(json_file)
+    # results = json.dumps(status)
+    print("Update successfully"+status)
+    return status
+
+@app.route('/myPrime',methods = ['POST'])
+def myPrime():
+    incoming = request.get_data()
+    json_file = json.loads(incoming)
+    print(json_file)
+    status = getMyPrime(json_file)
+    return status
 
 if __name__ == '__main__':
     app.run(debug=True)

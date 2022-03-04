@@ -19,11 +19,14 @@ db = MySQLdb.connect(
 )
 # 通过获取到的数据库连接conn下的cursor()方法来创建游标。
 cursor = db.cursor()
+dict={'username': 'admin', 'title': 'Spider-Man: No Way Home', 'rate': 2.5}
 # dict = {'username': 'admin', 'MovieId': '123', 'Like': True, 'Type': 'movie', 'title': 'Spider-Man: No Way Home', 'date': '2021-12-15', 'poster': '/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg', 'vote': '8.4'}
 # sqlInsert = "INSERT INTO userlike(username,movieid,movietitle,type,poster,movielike,date,vote) VALUES (%s,%s,%s,%s,%s,%s,%s,%s); "
 # parInsert = (dict['username'], dict['MovieId'], dict['title'], dict['Type'], dict['poster'], dict['Like'], dict['date'],
 #              dict['vote'],)
-sqlSe = "SELECT * FROM userlike"
+selectsql = "SELECT netflix,amazon FROM user WHERE username = %s"
+parSele = (dict['username'],)
+
 # parSe = (dict['MovieId'],)
 # sqlUp = "UPDATE userlike SET movielike=%s WHERE movieid = %s"
 # parUp = (dict['Like'], dict['MovieId'],)
@@ -31,12 +34,11 @@ sqlSe = "SELECT * FROM userlike"
 # parSele = (dict['username'],)
 try:
     # 执行SQL语句
-    cursor.execute(sqlSe)
-    result = cursor.fetchall()  # 所有结果
-    column = [index[0] for index in cursor.description]  # 列名
-    data_dict = [dict(zip(column, row)) for row in result]  # row是数据库返回的一条一条记录，其中的每一天和column写成字典，最后就是字典数组
-    print(data_dict)
-    print(type(data_dict))
+    cursor.execute(selectsql, parSele)
+    results = cursor.fetchall()
+    data = results[0][0]
+    print(data)
+
 except MySQLdb.Error as e:
     print(e)
 db.close()
