@@ -2,7 +2,7 @@ import React, {  } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Memorycontrol from '../../../../api/Memorycontrol'
 import { Modal,Button,Menu} from 'antd';
-import { ExclamationCircleOutlined,SearchOutlined,DesktopOutlined,HeartOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined,SearchOutlined,PlayCircleOutlined ,HeartOutlined } from '@ant-design/icons';
 import './index.less'
 import storageStore from '../../../../api/storageStore';
 const Headertitle = () => {
@@ -66,7 +66,7 @@ const Headertitle = () => {
                      Search
                     </Link>
                 </Menu.Item>
-                    <Menu.Item key="2" icon={<DesktopOutlined />}>
+                    <Menu.Item key="2" icon={<PlayCircleOutlined />}>
                         <Link to = '/movie'>
                         Movie
                         </Link>

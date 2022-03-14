@@ -58,6 +58,9 @@ const Login = () => {
         console.log(values);
         Memorycontrol.user=values
         storageStore.saveUser(values)
+        // setInterval(() => {
+        //   storageStore.removeUser()
+        // }, 400000);
           //remember才维持登录
         navigate('/')
       }
@@ -79,7 +82,7 @@ const Login = () => {
 
     <div className='login'>
       <header className='login-header'>
-        <h1>Movie Finding</h1>
+        <h1>Finding</h1>
       </header>
       <section className='login-content'>
         <h2>User Login</h2>
