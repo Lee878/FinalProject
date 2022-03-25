@@ -7,8 +7,11 @@ import axios from 'axios'
 import { Link,useNavigate  } from 'react-router-dom';
 import Memorycontrol from '../../api/Memorycontrol';
 import storageStore from '../../api/storageStore';
-import sha256 from 'crypto-js/sha256';
+// import CryptoJS from 'crypto-js';
+// import { keyPassword } from '../../config/config';
+import Encrytion from '../../api/Encrytion';
 
+// const keyHex = CryptoJS.enc.Utf8.parse(keyPassword);
 const Login = () => { 
   const navigate = useNavigate();
   const user= Memorycontrol.user
@@ -24,7 +27,21 @@ const Login = () => {
     // eslint-disable-next-line
   }, [])
 
+  // const encryptDES = (message) => {
+  //   if (message) {
+  //     let encrypted = CryptoJS.DES.encrypt(message, keyHex, {
+  //       mode: CryptoJS.mode.ECB,
+  //       padding: CryptoJS.pad.Pkcs7
+  //     });
+  //     return encrypted.ciphertext.toString();
+  //   } else {
+  //     return '';
+  //   }
+  // };
+
+
   const onFinish = (values) => {
+  values['password']=Encrytion.encryptDES(values['password'])
   axios
     .post('/login', {
       username: values['username'],
@@ -38,8 +55,7 @@ const Login = () => {
         message.success('Login in successfully');
         // console.log(values);
         // console.log(encryptDES(values['password']));
-        values['password']=sha256(values['password'])
-        // values['password']=encryptDES(values['password'])
+        // values['password']=Encrytion.encryptDES(values['password'])
         //encrytion password
         console.log(values);
         Memorycontrol.user=values

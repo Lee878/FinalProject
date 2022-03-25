@@ -3,6 +3,7 @@ import axios from 'axios';
 import './forget.less'
 import {Form,Input,Button,message} from 'antd';
 import { Link, useNavigate  } from 'react-router-dom';
+import Encrytion from '../../api/Encrytion';
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -39,6 +40,7 @@ const Forgetp = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
+    values['password']=Encrytion.encryptDES(values['password'])
     axios
     .post('/forget', {
       username: values['username'],

@@ -50,6 +50,8 @@ def loginMysql(dict):
         cursor.execute(sql, username)
         results = cursor.fetchall()
         password = results[0][2]
+        print(password)
+        print(dict['password'])
         if (password == dict['password']):
             # return "Correct password"
             statue = '1'
@@ -77,7 +79,8 @@ def forgetPassword(dict):
         cursor.execute(sql, par)
         db.commit()
         return '1'
-    except:
+    except MySQLdb.Error as e:
+        print(e)
         return '0'
 # 关闭数据库连接
     db.close()
@@ -308,6 +311,7 @@ def forget():
     json_file = json.loads(incoming)
     print(json_file['username'])
     status = forgetPassword(json_file)
+    print(status)
     return status
 
 @app.route('/like',methods = ['POST'])

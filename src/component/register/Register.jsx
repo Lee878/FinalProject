@@ -4,6 +4,7 @@ import './register.less';
 import axios from 'axios';
 import {Form,Input,Button,message} from 'antd';
 import { Link,useNavigate } from 'react-router-dom';
+import Encrytion from '../../api/Encrytion';
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -40,6 +41,7 @@ const Register = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
+    values['password']=Encrytion.encryptDES(values['password'])
     axios
     .post('/register', {
       username: values['username'],
