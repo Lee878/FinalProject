@@ -15,24 +15,63 @@ const Like = () => {
     const [pagesize, setPagesize] = useState(1)
     const [net, setNet] = useState(false)
     const [amz, setAmz] = useState(false)
+    // const [arr, setArr] = useState([])
 
     const username = Memorycontrol.user.username
-    const fetchMovie = async() =>{
-        await axios.post('/mylike',{
+    const fetchMovie = () =>{
+         axios.post('/mylike',{
             username: username,
         }
         ).then((response) => { 
             
             console.log(response.data)
             // console.log(response.data.length)
-            setContent(response.data)
-            setPagesize(response.data.length)
+            if (response.data !== 'wrong') {
+                console.log('sccc');
+                setContent(response.data)
+                setPagesize(response.data.length)
+            }else{
+                console.log('loost');
+            }
+           
           })
 
         // console.log(data)
         // setContent(data.results)
         // setPagesize(data.total_results)
     }
+
+//     const checkMyLike =  () =>{
+//         axios.post('/ckLike',{
+//            username: username,
+//        }
+//        ).then((response) => {
+//             // console.log(response.data)
+//             if (response.data !== 'wrong') {
+//                 // console.log(response.data);
+//                 setArr(response.data)
+//                 console.log('check successfully');
+//             }else{
+//                 console.log('loost');
+//             }
+          
+//             })
+//    }
+//    const fetchOut = async () =>{
+//     // arr.map(id => {
+//     //     console.log(id.id);
+//     //     console.log(id.type);
+//     // })
+//     const results = await Promise.all(
+//         getOutId(arr[0].id,arr[0].type)
+//         ) 
+//     console.log('here is all like' + results);
+//    }
+  
+
+//    const getOutId = (id,type)=>{
+//         return axios.get(`https://api.themoviedb.org/3/${type}/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
+//    }
 
     const fetchPrime = () =>{
          axios.post('/myPrime',{
@@ -91,6 +130,9 @@ const Like = () => {
     useEffect(() => {
         fetchMovie()
         fetchPrime()
+        // checkMyLike()
+        // fetchOut()
+        // console.log(content.length);
         // eslint-disable-next-line
     }, [page])
     return (
@@ -103,7 +145,7 @@ const Like = () => {
                 <Switch checked={amz}  onChange={onChangeAmz} className='switch'/>
             </div>
             <div className='movielist'>
-                {content && content.map((c)=>
+                {content.map((c)=>
                 <MovieItem 
                     key ={c[0]}
                     id = {c[2]} 

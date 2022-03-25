@@ -47,6 +47,7 @@ const Register = () => {
       email: values['email']
     }
     ).then((response) => { 
+      console.log(response.data);
       if(response.data ===1){
         console.log("ddd")
         message.success('This is a success message');
@@ -56,6 +57,9 @@ const Register = () => {
         console.log("sss")
         message.error('This is an error message');
       }
+      if (response.data ===2) {
+        message.warn('Duplicate username')
+      }
     })
 
     console.log('Success:', values);
@@ -64,7 +68,7 @@ const Register = () => {
   return (
     <div className='register'>
       <header className='register-header'>
-        <h1>Movie Finding</h1>
+        <h1>Finding</h1>
       </header>
       <section className='register-content'>
         <h2>Register Now</h2>

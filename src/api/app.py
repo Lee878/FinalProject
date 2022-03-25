@@ -15,11 +15,18 @@ def registermysqlMethod(dict):
     )
     cursor = db.cursor()
     sql = "INSERT INTO user(username,password,email) VALUES (%s,%s,%s);"
+    selsql = "SELECT * FROM user WHERE  username = %s"
+    par = (dict['username'],)
     try:
         # 执行SQL语句
-        cursor.execute(sql, (dict['username'], dict['password'], dict['email']))
-        db.commit()
-        return "1"
+        cursor.execute(selsql, par)
+        results = cursor.fetchall()
+        if (results):
+            return "2"
+        else:
+            cursor.execute(sql, (dict['username'], dict['password'], dict['email']))
+            db.commit()
+            return "1"
     except:
         print("Error: unable to fecth data")
         return "0"
@@ -87,10 +94,10 @@ def checkUserLike(dict):
     sqlInsert = "INSERT INTO userlike(username,movieid,movietitle,type,poster,movielike,date,vote) VALUES (%s,%s,%s,%s,%s,%s,%s,%s); "
     parInsert = (
     dict['username'], dict['MovieId'], dict['title'], dict['Type'], dict['poster'], dict['Like'], dict['date'],dict['vote'],)
-    sqlSe = "SELECT * FROM userlike WHERE  movieid = %s"
-    parSe = (dict['MovieId'],)
-    sqlUp = "UPDATE userlike SET movielike=%s WHERE movieid = %s"
-    parUp = (dict['Like'], dict['MovieId'],)
+    sqlSe = "SELECT * FROM userlike WHERE  movieid = %s and username = %s"
+    parSe = (dict['MovieId'],dict['username'],)
+    sqlUp = "UPDATE userlike SET movielike=%s, vote =%s WHERE movieid = %s and username = %s"
+    parUp = (dict['Like'],dict['vote'], dict['MovieId'],dict['username'],)
     try:
         # 执行SQL语句
         cursor.execute(sqlSe, parSe)
@@ -248,6 +255,32 @@ def getMyPrime(dict):
     db.close()
     return results
 
+def checkLike(dict):
+    db = MySQLdb.connect(
+        host='localhost',
+        port=3306,
+        user='root',
+        passwd='mysql2021',
+        db='test',
+    )
+    cursor = db.cursor()
+    selectsql = "SELECT DISTINCT movieid, type FROM userlike WHERE username = %s and movielike=%s"
+    parSele = (dict['username'],1,)
+    try:
+        # 执行SQL语句
+        cursor.execute(selectsql, parSele)
+        results = cursor.fetchall()
+        final = []
+        for a in results:
+            temp = {'id': int(a[0]), 'type': a[1]}
+            final.append(temp)
+    except:
+        return 'wrong'
+    # 关闭数据库连接
+    db.close()
+    return final
+
+
 @app.route('/time')
 def get_current_time():
     return {'time': time.time()}
@@ -332,6 +365,16 @@ def myPrime():
     print(json_file)
     status = getMyPrime(json_file)
     return status
+
+@app.route('/ckLike',methods = ['POST'])
+def checkMyLike():
+    incoming = request.get_data()
+    json_file = json.loads(incoming)
+    print(json_file)
+    status = checkLike(json_file)
+    print(status)
+    results = json.dumps(status)
+    return results
 
 if __name__ == '__main__':
     app.run(debug=True)

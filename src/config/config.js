@@ -14,5 +14,3 @@ export const unavailableLandscape =
 // For Carousel
 export const noPicture =
   "https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg";
-
-export const keyPassword = "Lee123"

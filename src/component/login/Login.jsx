@@ -7,10 +7,8 @@ import axios from 'axios'
 import { Link,useNavigate  } from 'react-router-dom';
 import Memorycontrol from '../../api/Memorycontrol';
 import storageStore from '../../api/storageStore';
-import CryptoJS from 'crypto-js';
-import { keyPassword } from '../../config/config';
+import sha256 from 'crypto-js/sha256';
 
-const keyHex = CryptoJS.enc.Utf8.parse(keyPassword);
 const Login = () => { 
   const navigate = useNavigate();
   const user= Memorycontrol.user
@@ -26,50 +24,38 @@ const Login = () => {
     // eslint-disable-next-line
   }, [])
 
-  const encryptDES = (message) => {
-    if (message) {
-      let encrypted = CryptoJS.DES.encrypt(message, keyHex, {
-        mode: CryptoJS.mode.ECB,
-        padding: CryptoJS.pad.Pkcs7
-      });
-      return encrypted.ciphertext.toString();
-    } else {
-      return '';
-    }
-  };
-
-
   const onFinish = (values) => {
   axios
     .post('/login', {
       username: values['username'],
       password: values['password'],
-      remember: true,
     }
     ).then((response) => { 
       console.log(response.data)
       console.log(typeof(response.data))
       if(response.data ===1){
-        console.log("ddd")
-        message.success('This is a success message');
-        console.log(values);
-        console.log(encryptDES(values['password']));
-        values['password']=encryptDES(values['password'])
+        // console.log("ddd")
+        message.success('Login in successfully');
+        // console.log(values);
+        // console.log(encryptDES(values['password']));
+        values['password']=sha256(values['password'])
+        // values['password']=encryptDES(values['password'])
+        //encrytion password
         console.log(values);
         Memorycontrol.user=values
+        //localstorage save username and password
         storageStore.saveUser(values)
-        // setInterval(() => {
-        //   storageStore.removeUser()
-        // }, 400000);
-          //remember才维持登录
+        setInterval(() => {
+         storageStore.removeUser()
+       }, 400000);
         navigate('/')
       }
       if (response.data === 0){
         console.log("sss")
-        message.error('This is an error message');
+        message.error('Username does not exist');
       }
       if (response.data === 2) {
-        message.warning('This is a warning message');
+        message.warning('Password error');
       }
     })
 
@@ -121,9 +107,7 @@ const Login = () => {
             />
           </Form.Item>
           <Form.Item>
-            {/* <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item> */}
+  
             <Link to='/forget'>
             <a className="login-form-forgot" href="//">
               Forgot password

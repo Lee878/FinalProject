@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './forget.less'
 import {Form,Input,Button,message} from 'antd';
-import { useNavigate  } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -63,7 +63,7 @@ const Forgetp = () => {
   return (
     <div className='forget'>
       <header className='forget-header'>
-        <h1>Movie Finding</h1>
+        <h1>Finding</h1>
       </header>
       <section className='forget-content'>
         <h2>Finding password</h2>
@@ -148,6 +148,8 @@ onFinish={onFinish}
   <Button type="primary" htmlType="submit">
     Reset password
   </Button>
+  <p> </p>
+  Or <Link to='/login'> Login</Link>
 </Form.Item>
 </Form>
       </section>

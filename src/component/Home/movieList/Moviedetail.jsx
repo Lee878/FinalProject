@@ -49,12 +49,6 @@ const Moviedetail = () => {
             try{
                 console.log('User', userResp.data);
                 console.log('Repositories', reposResp.data);
-                // if (reposResp.data) {
-                //     if (reposResp.data.results.GB.flatrate) {
-                //         console.log(reposResp.data.results.GB.flatrate);
-                //         setProvider(reposResp.data.results.GB.flatrate)
-                //     }
-                // } 
                 const data=Object.getOwnPropertyNames(reposResp.data.results);
                 // const index = reposResp.data.results[data[0].flatrate]
                 // console.log(index);
@@ -106,18 +100,7 @@ const Moviedetail = () => {
       
       }
 
-      const fetchPrime = () =>{
-        axios.post('/myPrime',{
-           username: username,
-       }
-       ).then((response) => { 
-           console.log(response.data)
-           setAmz(response.data.amazon)
-           // console.log(typeof(response.data.netfilx));
-           setNet(response.data.netfilx)
-    
-         })
-   }
+     
 
       function handleChange(value) {
         console.log(`selected ${value}`);
@@ -140,21 +123,6 @@ const Moviedetail = () => {
             console.log(typeof(response.data))
           })
       }
-    //   const options = {
-    //         method: 'GET',
-    //         url: `https://movies-sources.p.rapidapi.com/api/${params.id}`,
-    //         headers: {
-    //             'x-rapidapi-host': 'movies-sources.p.rapidapi.com',
-    //             'x-rapidapi-key': 'ba54a99fbfmsh07ca544629afe73p19f5d6jsnf3bc7ec82747'
-    //         }
-    //     };
-    //     const fetechMovieLikn =async()=>{
-    //         await axios.request(options).then(function (response) {
-    //             setWatchava(response.data.embed.links[0].url);
-    //         }).catch(function (error) {
-    //             console.error(error);
-    //         });
-    //     }
         
 
     const fetchLike=()=>{
@@ -182,6 +150,18 @@ const Moviedetail = () => {
           }
         })
       }
+      const fetchPrime = () =>{
+        axios.post('/myPrime',{
+           username: username,
+       }
+       ).then((response) => { 
+           console.log(response.data)
+           setAmz(response.data.amazon)
+           // console.log(typeof(response.data.netfilx));
+           setNet(response.data.netfilx)
+    
+         })
+   }
     useEffect(() => {
         setMovieid(params.id)
         setMovieType(params.type)

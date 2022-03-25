@@ -15,7 +15,7 @@ const MovieList = () => {
     const [pagesize, setPagesize] = useState(1)
     const [control, setControl] = useState(true)
     const fetchMovie = async() =>{
-        axios.all([
+        await axios.all([
             axios.get(`https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`),
             axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`)
           ])
