@@ -72,7 +72,7 @@ def forgetPassword(dict):
         db='test',
     )
     cursor = db.cursor()
-    sql = "UPDATE user SET password=%s, remember = 0 WHERE email = %s and username = %s  "
+    sql = "UPDATE user SET password=%s WHERE email = %s and username = %s  "
     par = (dict['password'], dict['email'], dict['username'],)
     try:
         # 执行SQL语句
@@ -95,8 +95,7 @@ def checkUserLike(dict):
     )
     cursor = db.cursor()
     sqlInsert = "INSERT INTO userlike(username,movieid,movietitle,type,poster,movielike,date,vote) VALUES (%s,%s,%s,%s,%s,%s,%s,%s); "
-    parInsert = (
-    dict['username'], dict['MovieId'], dict['title'], dict['Type'], dict['poster'], dict['Like'], dict['date'],dict['vote'],)
+    parInsert = (dict['username'], dict['MovieId'], dict['title'], dict['Type'], dict['poster'], dict['Like'], dict['date'],dict['vote'],)
     sqlSe = "SELECT * FROM userlike WHERE  movieid = %s and username = %s"
     parSe = (dict['MovieId'],dict['username'],)
     sqlUp = "UPDATE userlike SET movielike=%s, vote =%s WHERE movieid = %s and username = %s"

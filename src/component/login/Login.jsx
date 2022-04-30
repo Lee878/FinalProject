@@ -42,6 +42,7 @@ const Login = () => {
 
   const onFinish = (values) => {
   values['password']=Encrytion.encryptDES(values['password'])
+  console.log(values);
   axios
     .post('/login', {
       username: values['username'],
@@ -51,19 +52,14 @@ const Login = () => {
       console.log(response.data)
       console.log(typeof(response.data))
       if(response.data ===1){
-        // console.log("ddd")
         message.success('Login in successfully');
         // console.log(values);
-        // console.log(encryptDES(values['password']));
-        // values['password']=Encrytion.encryptDES(values['password'])
-        //encrytion password
-        console.log(values);
         Memorycontrol.user=values
         //localstorage save username and password
         storageStore.saveUser(values)
         setInterval(() => {
          storageStore.removeUser()
-       }, 400000);
+       }, 40000000);
         navigate('/')
       }
       if (response.data === 0){

@@ -47,7 +47,7 @@ const SearchMovie = () => {
     useEffect(() => {
         window.scroll(0, 0);
         onSearch()
-        console.log("work:"+searchText+"  context "+content)
+        // console.log("work:"+searchText+"  context "+content)
         // eslint-disable-next-line
       }, [typemovie, page]);
 

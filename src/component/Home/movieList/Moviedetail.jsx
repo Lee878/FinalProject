@@ -50,6 +50,7 @@ const Moviedetail = () => {
                 console.log('User', userResp.data);
                 console.log('Repositories', reposResp.data);
                 const data=Object.getOwnPropertyNames(reposResp.data.results);
+                console.log(data);
                 // const index = reposResp.data.results[data[0].flatrate]
                 // console.log(index);
                 const fianlData =[];
@@ -109,7 +110,7 @@ const Moviedetail = () => {
       }
 
       function rateChange(value){
-        console.log(`selected ${value}`);
+        // console.log(`selected ${value}`);
         setRate(value)
         // console.log(rate);
         axios
@@ -132,7 +133,7 @@ const Moviedetail = () => {
             Username: username
         }
         ).then((response) => { 
-          console.log(response.data)
+        //   console.log(response.data)
           const result = response.data
           const returnRate = parseFloat(response.data.rate)
         //   console.log(typeof(response.data))
@@ -155,7 +156,7 @@ const Moviedetail = () => {
            username: username,
        }
        ).then((response) => { 
-           console.log(response.data)
+        //    console.log(response.data)
            setAmz(response.data.amazon)
            // console.log(typeof(response.data.netfilx));
            setNet(response.data.netfilx)
@@ -233,9 +234,7 @@ const Moviedetail = () => {
                                         
                                         <Select  style={{ width: 120 }} onChange={handleChange}>
                                         {regions.map((p) => (
-                                        <Option key = {p} value={p}><ReactCountryFlag countryCode={p} svg style={{
-                                            marginBottom: '3.5px'
-                                        }}/> {p}</Option>
+                                        <Option key = {p} value={p}><ReactCountryFlag countryCode={p} svg style={{marginBottom: '3.5px'}}/> {p}</Option>
                                         ))}
                                         </Select>
                                         {
