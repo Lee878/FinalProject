@@ -28,7 +28,8 @@ selsql = "SELECT DISTINCT movieid, type FROM userlike WHERE  username = %s and m
 Instsql = "INSERT INTO user(username,password,email) VALUES (%s,%s,%s);"
 par = (dict['username'],)
 parSele = (dict['username'], dict['password'], dict['email'],)
-
+username = (dict['username'],)
+sql = "SELECT * FROM user WHERE username = '%s' " %(dict['username'],)
 # parSe = (dict['MovieId'],)
 # sqlUp = "UPDATE userlike SET movielike=%s WHERE movieid = %s"
 # parUp = (dict['Like'], dict['MovieId'],)
@@ -36,14 +37,15 @@ parSele = (dict['username'], dict['password'], dict['email'],)
 # parSele = (dict['username'],)
 try:
     # 执行SQL语句
-    cursor.execute(selsql, par)
+    cursor.execute(sql)
     results = cursor.fetchall()
-    final = []
-    for a in results:
-        temp = {'id':int(a[0]),'type':a[1]}
-        final.append(temp)
-    print(type(final))
-    print(final)
+    print(results)
+    # final = []
+    # for a in results:
+    #     temp = {'id':int(a[0]),'type':a[1]}
+    #     final.append(temp)
+    # print(type(final))
+    # print(final)
 
 
 except MySQLdb.Error as e:

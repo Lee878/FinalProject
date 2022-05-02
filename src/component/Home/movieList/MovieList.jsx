@@ -21,17 +21,17 @@ const MovieList = () => {
           ])
           .then(axios.spread(function (trending, topRated) {
             // 上面两个请求都完成后，才执行这个回调方法
-            console.log('User', trending.data);
-            console.log('Repositories', topRated.data);
+            // console.log('User', trending.data);
+            // console.log('Repositories', topRated.data);
             if (control) {
-                console.log(control);
+                // console.log(control);
                 setContent(trending.data.results)
                 setPagesize(trending.data.total_results)
             }else{
-                console.log(control);
+                // console.log(control);
                 setContent(topRated.data.results)
                 setPagesize(topRated.data.total_results)
-                console.log(content);
+                // console.log(content);
             }
         }));
         // https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}

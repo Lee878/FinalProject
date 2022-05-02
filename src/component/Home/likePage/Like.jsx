@@ -24,7 +24,7 @@ const Like = () => {
         }
         ).then((response) => { 
             
-            console.log(response.data)
+            // console.log(response.data)
             // console.log(response.data.length)
             if (response.data !== 'wrong') {
                 console.log('sccc');
@@ -41,44 +41,13 @@ const Like = () => {
         // setPagesize(data.total_results)
     }
 
-//     const checkMyLike =  () =>{
-//         axios.post('/ckLike',{
-//            username: username,
-//        }
-//        ).then((response) => {
-//             // console.log(response.data)
-//             if (response.data !== 'wrong') {
-//                 // console.log(response.data);
-//                 setArr(response.data)
-//                 console.log('check successfully');
-//             }else{
-//                 console.log('loost');
-//             }
-          
-//             })
-//    }
-//    const fetchOut = async () =>{
-//     // arr.map(id => {
-//     //     console.log(id.id);
-//     //     console.log(id.type);
-//     // })
-//     const results = await Promise.all(
-//         getOutId(arr[0].id,arr[0].type)
-//         ) 
-//     console.log('here is all like' + results);
-//    }
-  
-
-//    const getOutId = (id,type)=>{
-//         return axios.get(`https://api.themoviedb.org/3/${type}/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
-//    }
 
     const fetchPrime = () =>{
          axios.post('/myPrime',{
             username: username,
         }
         ).then((response) => { 
-            console.log(response.data)
+            // console.log(response.data)
             setAmz(response.data.amazon)
             // console.log(typeof(response.data.netfilx));
             setNet(response.data.netfilx)
@@ -109,18 +78,18 @@ const Like = () => {
     }
 
     function onChangeNet(checked) {
-        console.log(`switch Netflix to ${checked} and net is ${net}`);
+        // console.log(`switch Netflix to ${checked} and net is ${net}`);
         if (checked !== net) {
             console.log('success');
             setNet(!net)
         }
-        console.log('Ok Netflix'+net);
+        // console.log('Ok Netflix'+net);
         changePrime(1);
     }
     function onChangeAmz(checked) {
-        console.log(`switch Amazon to ${checked}and net is ${amz}`);
+        // console.log(`switch Amazon to ${checked}and net is ${amz}`);
         if (checked !== amz) {
-            console.log('success');
+            // console.log('success');
             setAmz(checked)
         }
         console.log('Ok Amazon' + amz);

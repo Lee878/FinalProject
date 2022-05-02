@@ -28,7 +28,7 @@ const Customcarousel = () => {
         `https://api.themoviedb.org/3/${params.type}/${params.id}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
         );
         setCredits(data.cast);
-        console.log(data);
+        // console.log(data);
     };
     const responsive = {
         0: {
@@ -54,7 +54,6 @@ const Customcarousel = () => {
             responsive={responsive}
             items={items}
             autoPlay
-            
         />
       );
 }

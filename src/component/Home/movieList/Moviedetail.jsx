@@ -47,10 +47,10 @@ const Moviedetail = () => {
           ])
           .then(axios.spread(function (userResp, reposResp) {
             try{
-                console.log('User', userResp.data);
-                console.log('Repositories', reposResp.data);
+                // console.log('User', userResp.data);
+                // console.log('Repositories', reposResp.data);
                 const data=Object.getOwnPropertyNames(reposResp.data.results);
-                console.log(data);
+                // console.log(data);
                 // const index = reposResp.data.results[data[0].flatrate]
                 // console.log(index);
                 const fianlData =[];
@@ -65,7 +65,9 @@ const Moviedetail = () => {
                     }
                 }
                 setRegions(fianlData)
+                //Countries with streaming media
                 setRegion(reposResp.data.results)
+                //Data from API
                 setContent(userResp.data);
                 setMoviedate(userResp.data.release_date || userResp.data.first_air_date)
                 setMovietitle(userResp.data.title||userResp.data.name)
@@ -74,7 +76,6 @@ const Moviedetail = () => {
                 }catch (error) {
                     console.error(error);
                 }
-            // 上面两个请求都完成后，才执行这个回调方法
             
         
           }));
@@ -104,7 +105,7 @@ const Moviedetail = () => {
      
 
       function handleChange(value) {
-        console.log(`selected ${value}`);
+        // console.log(`selected ${value}`);
         setProvider(region[value].flatrate)
         setfirst(region[value])
       }
@@ -120,8 +121,8 @@ const Moviedetail = () => {
             rate:value
           }
           ).then((response) => { 
-            console.log(response.data)
-            console.log(typeof(response.data))
+            // console.log(response.data)
+            // console.log(typeof(response.data))
           })
       }
         

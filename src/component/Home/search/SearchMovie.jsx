@@ -28,13 +28,14 @@ const SearchMovie = () => {
             setContent(data.results);
             setPagesize(data.total_results);
             setLength(data.results.length)
-            console.log(data.results);
+            // console.log(data.results);
           } catch (error) {
             console.error(error);
           }
     };
 
     const tabsChange =(key)=>{
+      // Switch tabs
       if (key ==='1') {
         setTypemovie(false);
       }

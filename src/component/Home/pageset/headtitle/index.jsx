@@ -6,22 +6,7 @@ import { ExclamationCircleOutlined,SearchOutlined,PlayCircleOutlined ,HeartOutli
 import './index.less'
 import storageStore from '../../../../api/storageStore';
 const Headertitle = () => {
-    // const [title, setTitle] = useState('')
-    // const menuList = [
-    //     {
-    //         title:'Search',
-    //         key:'/search',
-    //     },
-    //     {
-    //         title:'Likes',
-    //         key:'/like',
-    //     },
-    //     {
-    //         title:'Movie',
-    //         key:'/movie',
-    //     },
-
-    // ]
+    
     const { confirm } = Modal;
     const navigate = useNavigate()
     const logOut =()=>{
@@ -39,18 +24,6 @@ const Headertitle = () => {
             },
           });
     }
-    // const location = useLocation().pathname
-    // useEffect(() => {
-    //     const getTitle =()=>{
-    //         menuList.forEach(item =>{
-    //             if (item.key === location){
-    //                 setTitle(item.title)
-    //             }
-    //         })
-    //     }
-    //     getTitle()
-    //     // eslint-disable-next-line
-    // }, [location])
     const username = Memorycontrol.user.username
 
 

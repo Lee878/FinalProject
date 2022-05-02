@@ -19,7 +19,7 @@ const Login = () => {
     const isLogin=()=>{
       console.log(user)
       if (user.username!==undefined) {
-        console.log('ddd')
+        // console.log('ddd')
         navigate('/')
       }
     }
@@ -27,30 +27,18 @@ const Login = () => {
     // eslint-disable-next-line
   }, [])
 
-  // const encryptDES = (message) => {
-  //   if (message) {
-  //     let encrypted = CryptoJS.DES.encrypt(message, keyHex, {
-  //       mode: CryptoJS.mode.ECB,
-  //       padding: CryptoJS.pad.Pkcs7
-  //     });
-  //     return encrypted.ciphertext.toString();
-  //   } else {
-  //     return '';
-  //   }
-  // };
-
 
   const onFinish = (values) => {
   values['password']=Encrytion.encryptDES(values['password'])
-  console.log(values);
+  // console.log(values);
   axios
     .post('/login', {
       username: values['username'],
       password: values['password'],
     }
     ).then((response) => { 
-      console.log(response.data)
-      console.log(typeof(response.data))
+      // console.log(response.data)
+      // console.log(typeof(response.data))
       if(response.data ===1){
         message.success('Login in successfully');
         // console.log(values);
@@ -63,7 +51,7 @@ const Login = () => {
         navigate('/')
       }
       if (response.data === 0){
-        console.log("sss")
+        // console.log("sss")
         message.error('Username does not exist');
       }
       if (response.data === 2) {

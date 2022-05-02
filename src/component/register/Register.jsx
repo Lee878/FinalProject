@@ -49,14 +49,14 @@ const Register = () => {
       email: values['email']
     }
     ).then((response) => { 
-      console.log(response.data);
+      // console.log(response.data);
       if(response.data ===1){
-        console.log("ddd")
+        // console.log("ddd")
         message.success('This is a success message');
         navigate('/login')
       }
       if (response.data === 0){
-        console.log("sss")
+        // console.log("sss")
         message.error('This is an error message');
       }
       if (response.data ===2) {
@@ -64,7 +64,7 @@ const Register = () => {
       }
     })
 
-    console.log('Success:', values);
+    // console.log('Success:', values);
   };
 
   return (
